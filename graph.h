@@ -25,7 +25,7 @@ int * graph_get_neighbors(Graph g, const int n);
 
 int graph_node_exists(Graph g, const int n1);
 
-int graph_edge_exists(Graph g, const int n1, const int n2);
+int graph_vertex_exists(Graph g, const int n1, const int n2);
 
 int graph_empty(const Graph g);
 

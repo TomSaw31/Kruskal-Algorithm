@@ -1,13 +1,32 @@
 #include "graph.h"
 #include <stdlib.h>
 
-struct tGraph {
+
+typedef struct s_Vertex {
+	struct s_Node * n1;
+	struct s_Node * n2;
+	float weight;
+} Vertex;
+
+typedef struct s_Node {
+	int value;
+} Node;
+
+typedef struct s_VerticesTable {
+	Vertex ** vertices;
+	Vertex ** fast_vertices;
+	unsigned int step;
+} VerticesTable;
+
+typedef struct tGraph {
 	unsigned int size;
-	unsigned int 
-	const void** stack; // array of const void *
-};
-
-
+	unsigned int max_size;
+	unsigned int vertices_count;
+	VerticesTable vertices;
+	Node * nodes;
+}Graph;
+/*----- Public Functions -----*/
+typedef void (*GraphVertexMapOperator)(const void* elem, void* user_param);
 
 Graph graph_create(unsigned int max_size){}
 
@@ -41,6 +60,7 @@ unsigned int graph_vertices_amount(const Graph g){}
 
 int graph_overflow(const Graph g){}
 
-typedef void (*GraphVertexMapOperator)(const void* elem, void* user_param){}
-
 void graph_map(const Graph g, GraphVertexMapOperator f, void* user_param){}
+
+/*----- Private Functions -----*/
+
