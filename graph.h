@@ -1,7 +1,9 @@
 #ifndef __GRAPH_H__
 #define __GRAPH_H__
 
-typedef struct Graph * tGraph;
+typedef struct tGraph * Graph;
+
+typedef void (*GraphEdgeMapOperator)(const void* elem, void * user_param);
 
 Graph graph_create(unsigned int max_size);
 
@@ -35,9 +37,7 @@ unsigned int graph_size(const Graph g);
 
 unsigned int graph_vertices_amount(const Graph g);
 
-int graph_overflow(const Graph g);
-
-typedef void (*GraphEdgeMapOperator)(const void* elem, void * user_param);
+float graph_density(const Graph g);
 
 void graph_map(const Graph g, GraphEdgeMapOperator f, void * user_param);
 
