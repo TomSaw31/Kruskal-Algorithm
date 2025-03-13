@@ -1,6 +1,7 @@
 {
     "C_Cpp.errorSquiggles": "enabled",
     "files.associations": {
-        "graph.h": "c"
+        "graph.h": "c",
+        "graph_serializer.h": "c"
     }
 }

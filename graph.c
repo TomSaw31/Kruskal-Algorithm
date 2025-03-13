@@ -33,7 +33,7 @@ Graph graph_create(unsigned int max_size) {
 	assert(max_size > 0);
 	Graph g = malloc(sizeof(Graph));
 	if(g == NULL) {
-		fprintf(stderr, "Memory allocation error while creating a graph : graph_create\n");
+		fprintf(stderr, "Memory allocation error while creating a graph in graph_create\n");
 		return 1;
 	}
 	g->size = 0;

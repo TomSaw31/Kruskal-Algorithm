@@ -21,7 +21,7 @@ typedef struct s_Sublist {
 List list_create() {
 	List l = malloc(sizeof(List) + sizeof(LinkedNode));
     if(l == NULL) {
-		fprintf(stderr, "Memory allocation error while creating a list : list_create\n");
+		fprintf(stderr, "Memory allocation error while creating a list in list_create\n");
 		return NULL;
 	}
 	l->sll = (LinkedNode *)(l + 1);
@@ -45,7 +45,7 @@ void list_delete(List * l) {
 List list_push_front(List l, int v) {
 	LinkedNode * n = malloc(sizeof(LinkedNode));
     if(n == NULL) {
-		fprintf(stderr, "Memory allocation error while creating a node : list_push_front\n");
+		fprintf(stderr, "Memory allocation error while creating a node in list_push_front\n");
 		return NULL;
 	}
 	n->value = v;
@@ -60,7 +60,7 @@ List list_push_front(List l, int v) {
 List list_push_back(List l, int v) {
 	LinkedNode * n = malloc(sizeof(LinkedNode));
     if(n == NULL) {
-		fprintf(stderr, "Memory allocation error while creating a node : list_push_back\n");
+		fprintf(stderr, "Memory allocation error while creating a node in list_push_back\n");
 		return NULL;
 	}
 	n->value = v;
@@ -74,14 +74,14 @@ List list_push_back(List l, int v) {
 
 List list_insert_at(List l, int p, int v) {
     if(p < 0 || p > l->size) {
-        fprintf(stderr, "Precondition : p index must be between 0 and the size of the list (inclusive) : list_insert_at\n");
+        fprintf(stderr, "Precondition : p index must be between 0 and the size of the list (inclusive) in list_insert_at\n");
 		return NULL;
     }
 	LinkedNode * n = l->sll->next;
 	while(p--) n = n->next;
 	LinkedNode * new = malloc(sizeof(LinkedNode));
     if(new == NULL) {
-		fprintf(stderr, "Memory allocation error while creating a node : list_insert_at\n");
+		fprintf(stderr, "Memory allocation error while creating a node in list_insert_at\n");
 		return NULL;
 	}
 	new->value = v;
@@ -95,7 +95,7 @@ List list_insert_at(List l, int p, int v) {
 
 List list_pop_front(List l) {
     if(list_is_empty(l)) {
-        fprintf(stderr, "Precondition : List must not be empty : list_pop_front\n");
+        fprintf(stderr, "Precondition : List must not be empty in list_pop_front\n");
 		return NULL;
     }
 	LinkedNode * n = l->sll->next;
@@ -108,7 +108,7 @@ List list_pop_front(List l) {
 
 List list_pop_back(List l){
     if(list_is_empty(l)) {
-        fprintf(stderr, "Precondition : List must not be empty : list_pop_back\n");
+        fprintf(stderr, "Precondition : List must not be empty in list_pop_back\n");
 		return NULL;
     }
 	LinkedNode * n = l->sll->prev;
@@ -121,7 +121,7 @@ List list_pop_back(List l){
 
 List list_remove_at(List l, int p) {
     if(0 > p || p >= l->size) {
-        fprintf(stderr, "Precondition : p index must be between 0 (inclusive) and the size of the list (exclusive) : list_remove_at\n");
+        fprintf(stderr, "Precondition : p index must be between 0 (inclusive) and the size of the list (exclusive) in list_remove_at\n");
 		return NULL;
     }
 	LinkedNode * n = l->sll->next;
@@ -141,7 +141,7 @@ List list_map(List l, ListFunctor f, void * environment) {
 
 int list_at(const List l, int p) {
     if(0 > p || p >= l->size) {
-        fprintf(stderr, "Precondition : p index must be between 0 (inclusive) and the size of the list (exclusive) : list_at\n");
+        fprintf(stderr, "Precondition : p index must be between 0 (inclusive) and the size of the list (exclusive) in list_at\n");
 		return NULL;
     }
 	LinkedNode * n = l->sll->next;
@@ -151,7 +151,7 @@ int list_at(const List l, int p) {
 
 int list_front(const List l) {
     if(list_is_empty(l)) {
-        fprintf(stderr, "Precondition : List must not be empty : list_front\n");
+        fprintf(stderr, "Precondition : List must not be empty in list_front\n");
 		return NULL;
     }
 	return l->sll->next->value;
@@ -159,7 +159,7 @@ int list_front(const List l) {
 
 int list_back(const List l) {
     if(list_is_empty(l)) {
-        fprintf(stderr, "Precondition : List must not be empty : list_back\n");
+        fprintf(stderr, "Precondition : List must not be empty in list_back\n");
 		return NULL;
     }
 	return l->sll->prev->value;

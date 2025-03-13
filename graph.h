@@ -1,9 +1,9 @@
 #ifndef __GRAPH_H__
 #define __GRAPH_H__
 
-typedef struct tGraph * Graph;
+typedef struct s_Graph * Graph;
 
-typedef void (*GraphEdgeMapOperator)(const void* elem, void * user_param);
+typedef void (*GraphEdgeMapOperator)(const void * elem, void * user_param);
 
 Graph graph_create(unsigned int max_size);
 
