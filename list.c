@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "list.h"
 
 typedef struct s_LinkedNode {
@@ -19,7 +20,7 @@ typedef struct s_Sublist {
 } Sublist;
 
 List list_create() {
-	List l = malloc(sizeof(List) + sizeof(LinkedNode));
+	List l = malloc(sizeof(struct s_List) + sizeof(struct s_LinkedNode));
     if(l == NULL) {
 		fprintf(stderr, "Memory allocation error while creating a list in list_create\n");
 		return NULL;
@@ -140,28 +141,19 @@ List list_map(List l, ListFunctor f, void * environment) {
 }
 
 int list_at(const List l, int p) {
-    if(0 > p || p >= l->size) {
-        fprintf(stderr, "Precondition : p index must be between 0 (inclusive) and the size of the list (exclusive) in list_at\n");
-		return NULL;
-    }
+    assert(0 <= p && p < l->size);
 	LinkedNode * n = l->sll->next;
 	while(p--) n = n->next;
 	return n->value;
 }
 
 int list_front(const List l) {
-    if(list_is_empty(l)) {
-        fprintf(stderr, "Precondition : List must not be empty in list_front\n");
-		return NULL;
-    }
+    assert(!list_is_empty(l));
 	return l->sll->next->value;
 }
 
 int list_back(const List l) {
-    if(list_is_empty(l)) {
-        fprintf(stderr, "Precondition : List must not be empty in list_back\n");
-		return NULL;
-    }
+    assert(!list_is_empty(l));
 	return l->sll->prev->value;
 }
 
@@ -251,4 +243,18 @@ List list_sort(List l, OrderFunctor f) {
 	l->sll->next = sub_list.head;
 	l->sll->prev = sub_list.tail;
 	return l;
+}
+
+// TODO dichotomic search
+int list_get_index(const List l, int v) {
+	LinkedNode * n = l->sll->next;
+	int i = 0;
+	do {
+		if(n->value == v) {
+			return i;
+		}
+		i++;
+		n = n->next;
+	} while(n != l->sll);
+	return -1;
 }
