@@ -3,5 +3,11 @@
 		{ "vertex": 1 },
 		{ "vertex": 2 },
 		{ "vertex": 3 }
+	],
+	"edges": [
+		{ "from": 1, "to": 2, "weight": 0.500000 },
+		{ "from": 1, "to": 3, "weight": 0.100000 },
+		{ "from": 2, "to": 3, "weight": 0.640000 }
 	]
 }
+

@@ -2,7 +2,9 @@
 #define __GRAPH_H__
 
 #include "list.h"
+
 typedef struct s_Graph * Graph;
+typedef struct s_Edge * Edge;
 
 // typedef void (*GraphEdgeMapOperator)(const void * elem, void * user_param);
 
@@ -10,7 +12,7 @@ Graph graph_create();
 
 Graph graph_add_vertex(Graph g, const int n);
 
-// Graph graph_add_edge(Graph g, const int n1, const int n2, const float w);
+Graph graph_add_edge(Graph g, const int n1, const int n2, const float w);
 
 void graph_delete(Graph g);
 
@@ -20,7 +22,13 @@ void graph_delete(Graph g);
 
 List graph_get_vertices(Graph g);
 
-// float graph_get_edge_weight(Graph g, const int n1, const int n2);
+List graph_get_edges(Graph g);
+
+int graph_get_edges_start(const Edge e);
+
+int graph_get_edges_end(const Edge e);
+
+float graph_get_edge_weight(const Edge e);
 
 // List graph_get_neighbors(Graph g, const int n);
 

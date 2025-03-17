@@ -4,7 +4,7 @@
 #include "list.h"
 
 typedef struct s_LinkedNode {
-	int value;
+	void * value;
 	struct s_LinkedNode * prev;
 	struct s_LinkedNode * next;
 } LinkedNode;
@@ -37,13 +37,14 @@ void list_delete(List * l) {
 	while (n != (*l)->sll) {
 		tmp = n;
 		n = n->next;
+		free(tmp->value);
 		free(tmp);
 	}
 	free(*l);
 	(*l) = NULL;
 }
 
-List list_push_front(List l, int v) {
+List list_push_front(List l, void * v) {
 	LinkedNode * n = malloc(sizeof(LinkedNode));
     if(n == NULL) {
 		fprintf(stderr, "Memory allocation error while creating a node in list_push_front\n");
@@ -58,7 +59,7 @@ List list_push_front(List l, int v) {
 	return l;
 }
 
-List list_push_back(List l, int v) {
+List list_push_back(List l, void * v) {
 	LinkedNode * n = malloc(sizeof(LinkedNode));
     if(n == NULL) {
 		fprintf(stderr, "Memory allocation error while creating a node in list_push_back\n");
@@ -73,7 +74,7 @@ List list_push_back(List l, int v) {
 	return l;
 }
 
-List list_insert_at(List l, int p, int v) {
+List list_insert_at(List l, int p, void * v) {
     if(p < 0 || p > l->size) {
         fprintf(stderr, "Precondition : p index must be between 0 and the size of the list (inclusive) in list_insert_at\n");
 		return NULL;
@@ -140,19 +141,19 @@ List list_map(List l, ListFunctor f, void * environment) {
     return l;
 }
 
-int list_at(const List l, int p) {
+void * list_at(const List l, int p) {
     assert(0 <= p && p < l->size);
 	LinkedNode * n = l->sll->next;
 	while(p--) n = n->next;
 	return n->value;
 }
 
-int list_front(const List l) {
+void * list_front(const List l) {
     assert(!list_is_empty(l));
 	return l->sll->next->value;
 }
 
-int list_back(const List l) {
+void * list_back(const List l) {
     assert(!list_is_empty(l));
 	return l->sll->prev->value;
 }
@@ -245,8 +246,8 @@ List list_sort(List l, OrderFunctor f) {
 	return l;
 }
 
-// TODO dichotomic search
-int list_get_index(const List l, int v) {
+// TODO improve search
+int list_get_index(const List l, void * v) {
 	LinkedNode * n = l->sll->next;
 	int i = 0;
 	do {

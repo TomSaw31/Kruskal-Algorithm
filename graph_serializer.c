@@ -11,15 +11,43 @@ int convert_graph_to_json(Graph g, char * file_location) {
     }
     List vertices = graph_get_vertices(g);
     unsigned int vertices_count = graph_size(g);
-
+    List edges = graph_get_edges(g);
+    unsigned int edges_count = graph_edges_amount(g);
+    int * i_copy;
     fprintf(f,"{\n\t\"vertices\": [\n");
+    
     for(unsigned int i = 0; i < vertices_count - 1; i++) {
-        fprintf(f, "\t\t{ \"vertex\": %d },\n",list_at(vertices,i));
+        i_copy = (int *)list_at(vertices,i);
+        fprintf(f, "\t\t{ \"vertex\": %d },\n",*i_copy);
     }
-    fprintf(f, "\t\t{ \"vertex\": %d }\n",list_at(vertices,vertices_count - 1));
+    i_copy = (int *)list_at(vertices,vertices_count - 1);
+    fprintf(f, "\t\t{ \"vertex\": %d }\n",*i_copy);
+    
+    fprintf(f,"\t],\n");
+
+    fprintf(f,"\t\"edges\": [\n");
+
+    Edge e_copy;
+    for(unsigned int i = 0; i < edges_count - 1; i++) {
+        e_copy = (Edge)list_at(edges,i);
+        fprintf(f, "\t\t{ \"from\": %d, \"to\": %d, \"weight\": %f },\n",graph_get_edges_start(e_copy),graph_get_edges_end(e_copy), graph_get_edge_weight(e_copy));
+    }
+    e_copy = (Edge)list_at(edges,edges_count - 1);
+    fprintf(f, "\t\t{ \"from\": %d, \"to\": %d, \"weight\": %f }\n",graph_get_edges_start(e_copy),graph_get_edges_end(e_copy), graph_get_edge_weight(e_copy));
     fprintf(f,"\t]\n");
     fprintf(f,"}\n");
 
     fclose(f);
     return 0;
 }
+
+/*
+
+  "edges": [
+    { "from": "A", "to": "B", "weight": 5 },
+    { "from": "B", "to": "C", "weight": 2 },
+    { "from": "C", "to": "D", "weight": 1 },
+    { "from": "D", "to": "A", "weight": 3 },
+    { "from": "A", "to": "C", "weight": 7 }
+  ]
+}*/
