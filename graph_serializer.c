@@ -40,14 +40,3 @@ int convert_graph_to_json(Graph g, char * file_location) {
     fclose(f);
     return 0;
 }
-
-/*
-
-  "edges": [
-    { "from": "A", "to": "B", "weight": 5 },
-    { "from": "B", "to": "C", "weight": 2 },
-    { "from": "C", "to": "D", "weight": 1 },
-    { "from": "D", "to": "A", "weight": 3 },
-    { "from": "A", "to": "C", "weight": 7 }
-  ]
-}*/
