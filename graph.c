@@ -13,8 +13,6 @@ struct s_Edge {
 };
 
 struct s_Graph {
-	unsigned int size;
-	unsigned int edges_count;
 	List vertices;
 	List edges;
 };
@@ -30,8 +28,6 @@ Graph graph_create() {
 		fprintf(stderr, "Memory allocation error while creating a graph in graph_create\n");
 		return NULL;
 	}
-	g->size = 0;
-	g->edges_count = 0;
 	g->vertices = list_create();
 	g->edges = list_create();
 	return g;
@@ -45,7 +41,6 @@ Graph graph_add_vertex(Graph g, const int n){
 	}
 	*n_copy = n;
 	list_push_back(g->vertices,n_copy);
-	g->size++;
 	list_sort(g->vertices,int_functor_order);
 	return g;
 }
@@ -60,7 +55,6 @@ Graph graph_add_edge(Graph g, const int n1, const int n2, const float w) {
 	e->n2 = n2;
 	e->weight = w;
 	list_push_back(g->edges,e);
-	g->edges_count++;
 	list_sort(g->edges,edge_functor_order);
 	return g;
 }
@@ -74,9 +68,16 @@ void graph_delete(Graph g){
 	g = NULL;
 }
 
-// Graph graph_delete_vertex(Graph g, const int n){
-// 	return NULL;
-// }
+Graph graph_delete_vertex(Graph g, const int n) {
+	int n_c = (int)n;
+	int i = list_get_index(g->vertices,&n_c);
+	if(i == -1) {
+		fprintf(stderr, "Error : Trying to delete a non existent vertex in graph_delete_vertex\n");
+		return g;
+	}
+	list_remove_at(g->vertices,i);
+	return g;
+}
 
 // Graph graph_delete_edge(Graph g, const int n1, const int n2){
 // 	return NULL;
@@ -119,15 +120,15 @@ int graph_vertex_exists(Graph g, const int n) {
 // }
 
 int graph_empty(const Graph g){
-	return !g->size;
+	return !list_size(g->vertices);
 }
 
 unsigned int graph_size(const Graph g){
-	return g->size;
+	return list_size(g->vertices);
 }
 
 unsigned int graph_edges_amount(const Graph g){
-	return g->edges_count;
+	return list_size(g->edges);
 }
 
 // void graph_map(const Graph g, GraphEdgeMapOperator f, void * user_param){
@@ -135,7 +136,8 @@ unsigned int graph_edges_amount(const Graph g){
 // }
 
 float graph_density(const Graph g) {
-	return g->edges_count/(g->size * g->size);
+	int s = list_size(g->vertices);
+	return list_size(g->edges)/(s * s);
 }
 
 /*----- Private Functions -----*/

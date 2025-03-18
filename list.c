@@ -96,10 +96,7 @@ List list_insert_at(List l, int p, void * v) {
 }
 
 List list_pop_front(List l) {
-    if(list_is_empty(l)) {
-        fprintf(stderr, "Precondition : List must not be empty in list_pop_front\n");
-		return NULL;
-    }
+    assert(!list_is_empty(l));
 	LinkedNode * n = l->sll->next;
 	l->sll->next = n->next;
 	n->next->prev = l->sll;
@@ -109,10 +106,7 @@ List list_pop_front(List l) {
 }
 
 List list_pop_back(List l){
-    if(list_is_empty(l)) {
-        fprintf(stderr, "Precondition : List must not be empty in list_pop_back\n");
-		return NULL;
-    }
+    assert(!list_is_empty(l));
 	LinkedNode * n = l->sll->prev;
 	l->sll->prev = n->prev;
 	n->prev->next = l->sll;
@@ -121,11 +115,9 @@ List list_pop_back(List l){
 	return l;
 }
 
+// TODO fix memory leaks
 List list_remove_at(List l, int p) {
-    if(0 > p || p >= l->size) {
-        fprintf(stderr, "Precondition : p index must be between 0 (inclusive) and the size of the list (exclusive) in list_remove_at\n");
-		return NULL;
-    }
+    assert(0 <= p && p < l->size);
 	LinkedNode * n = l->sll->next;
 	while(p--) n = n->next;
 	n->next->prev = n->prev;
@@ -251,7 +243,7 @@ int list_get_index(const List l, void * v) {
 	LinkedNode * n = l->sll->next;
 	int i = 0;
 	do {
-		if(n->value == v) {
+		if(*(int*)n->value == *(int*)v) {
 			return i;
 		}
 		i++;

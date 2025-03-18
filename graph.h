@@ -16,7 +16,7 @@ Graph graph_add_edge(Graph g, const int n1, const int n2, const float w);
 
 void graph_delete(Graph g);
 
-// Graph graph_delete_vertex(Graph g, const int n);
+Graph graph_delete_vertex(Graph g, const int n);
 
 // Graph graph_delete_edge(Graph g, const int n1, const int n2);
 

@@ -3,6 +3,9 @@
     "files.associations": {
         "graph.h": "c",
         "graph_serializer.h": "c",
-        "assert.h": "c"
+        "assert.h": "c",
+        "type_traits": "c",
+        "xtr1common": "c",
+        "xutility": "c"
     }
 }
