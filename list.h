@@ -7,6 +7,8 @@ typedef void *(*ListFunctor)(void *, void*);
 
 typedef int(*OrderFunctor)(void *, void *);
 
+typedef int(*IndexAccess)(void *);
+
 List list_create(void);
 
 void list_delete(List * l);
@@ -37,7 +39,7 @@ List list_map(List l, ListFunctor f, void* environment);
 
 List list_sort(List l, OrderFunctor f);
 
-int list_get_index(const List l, void * v);
+int list_get_index(const List l, int * v, IndexAccess f);
 
 #endif
 

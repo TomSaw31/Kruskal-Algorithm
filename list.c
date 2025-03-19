@@ -100,6 +100,7 @@ List list_pop_front(List l) {
 	LinkedNode * n = l->sll->next;
 	l->sll->next = n->next;
 	n->next->prev = l->sll;
+	free(n->value);
 	free(n);
 	l->size--;
 	return l;
@@ -110,12 +111,12 @@ List list_pop_back(List l){
 	LinkedNode * n = l->sll->prev;
 	l->sll->prev = n->prev;
 	n->prev->next = l->sll;
+	free(n->value);
 	free(n);
 	l->size--;
 	return l;
 }
 
-// TODO fix memory leaks
 List list_remove_at(List l, int p) {
     assert(0 <= p && p < l->size);
 	LinkedNode * n = l->sll->next;
@@ -123,6 +124,7 @@ List list_remove_at(List l, int p) {
 	n->next->prev = n->prev;
 	n->prev->next = n->next;
 	l->size--;
+	free(n->value);
 	free(n);
 	return l;
 }
@@ -239,11 +241,11 @@ List list_sort(List l, OrderFunctor f) {
 }
 
 // TODO improve search
-int list_get_index(const List l, void * v) {
+int list_get_index(const List l, int * v, IndexAccess f) {
 	LinkedNode * n = l->sll->next;
 	int i = 0;
 	do {
-		if(*(int*)n->value == *(int*)v) {
+		if(f(n->value) == *v) {
 			return i;
 		}
 		i++;

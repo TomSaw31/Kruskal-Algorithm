@@ -18,8 +18,9 @@ struct s_Graph {
 };
 
 // typedef void (*GraphEdgeMapOperator)(const void* elem, void* user_param);
-int int_functor_order(void * x, void * y);
-int edge_functor_order(void * x, void * y);
+int _int_functor_order(void * x, void * y);
+int _edge_functor_order(void * x, void * y);
+int _index_access_vertex(void * e);
 /*----- Header Functions -----*/
 
 Graph graph_create() {
@@ -41,7 +42,7 @@ Graph graph_add_vertex(Graph g, const int n){
 	}
 	*n_copy = n;
 	list_push_back(g->vertices,n_copy);
-	list_sort(g->vertices,int_functor_order);
+	list_sort(g->vertices,_int_functor_order);
 	return g;
 }
 
@@ -55,7 +56,7 @@ Graph graph_add_edge(Graph g, const int n1, const int n2, const float w) {
 	e->n2 = n2;
 	e->weight = w;
 	list_push_back(g->edges,e);
-	list_sort(g->edges,edge_functor_order);
+	list_sort(g->edges,_edge_functor_order);
 	return g;
 }
 
@@ -70,7 +71,7 @@ void graph_delete(Graph g){
 
 Graph graph_delete_vertex(Graph g, const int n) {
 	int n_c = (int)n;
-	int i = list_get_index(g->vertices,&n_c);
+	int i = list_get_index(g->vertices,&n_c,_index_access_vertex);
 	if(i == -1) {
 		fprintf(stderr, "Error : Trying to delete a non existent vertex in graph_delete_vertex\n");
 		return g;
@@ -110,7 +111,7 @@ float graph_get_edge_weight(const Edge e) {
 int graph_vertex_exists(Graph g, const int n) {
 	int * n_copy = malloc(sizeof(int));
 	*n_copy = (int)n;
-	int result = list_get_index(g->vertices,n_copy) != -1;
+	int result = list_get_index(g->vertices,n_copy,_index_access_vertex) != -1;
 	free(n_copy);
 	return result;
 }
@@ -141,14 +142,19 @@ float graph_density(const Graph g) {
 }
 
 /*----- Private Functions -----*/
-int int_functor_order(void * x, void * y) {
+int _int_functor_order(void * x, void * y) {
 	int * x_c = (int *)x;
 	int * y_c = (int *)y;
 	return *x_c < *y_c;
 }
 
-int edge_functor_order(void * x, void * y) {
+int _edge_functor_order(void * x, void * y) {
 	Edge x_c = (Edge)x;
 	Edge y_c = (Edge)y;
 	return x_c->n1 == y_c->n1 ? x_c->n2 < y_c->n2 : x_c->n1 < y_c->n1;
+}
+
+int _index_access_vertex(void * v) {
+	int * vertex = (int *)v;
+	return *vertex;
 }

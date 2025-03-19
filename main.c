@@ -2,7 +2,9 @@
 #include "graph_serializer.h"
 #include <stdio.h>
 
-int main(int argc, char * argv[]) {
+#define FILE_NAME "test.json"
+
+int main(void) {
     Graph g = graph_create();
     graph_add_vertex(g,1);
     graph_add_vertex(g,2);
@@ -12,8 +14,7 @@ int main(int argc, char * argv[]) {
     graph_add_edge(g,1,3,0.1);
     graph_delete_vertex(g,1);
     graph_delete_vertex(g,2);
-    graph_delete_vertex(g,3);
-    convert_graph_to_json(g,"test.json");
+    convert_graph_to_json(g,FILE_NAME);
     graph_delete(g);
     return 0;
 }
