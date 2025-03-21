@@ -241,7 +241,7 @@ List list_sort(List l, OrderFunctor f) {
 }
 
 // TODO improve search
-int list_get_index(const List l, int * v, IndexAccess f) {
+int list_get_index(const List l, int * v, IndexAccessor f) {
 	LinkedNode * n = l->sll->next;
 	int i = 0;
 	do {
@@ -252,4 +252,13 @@ int list_get_index(const List l, int * v, IndexAccess f) {
 		n = n->next;
 	} while(n != l->sll);
 	return -1;
+}
+
+List list_search(const List l, void * value, SearchAccessor f) {
+	List result_l = list_create();
+	for (LinkedNode * n = l->sll->next; n != l->sll; n = n->next)
+		if(f(n->value,value)) {
+			list_push_back(result_l,n);
+		}
+	return l;
 }

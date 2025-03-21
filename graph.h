@@ -30,7 +30,7 @@ int graph_get_edges_end(const Edge e);
 
 float graph_get_edge_weight(const Edge e);
 
-// List graph_get_neighbors(Graph g, const int n);
+List graph_get_neighbors(Graph g, const int n);
 
 int graph_vertex_exists(Graph g, const int n);
 

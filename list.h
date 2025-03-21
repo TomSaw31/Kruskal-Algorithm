@@ -3,11 +3,13 @@
 
 typedef struct s_List * List;
 
-typedef void *(*ListFunctor)(void *, void*);
+typedef void *(*ListFunctor)(void *, void *);
 
 typedef int(*OrderFunctor)(void *, void *);
 
-typedef int(*IndexAccess)(void *);
+typedef int(*IndexAccessor)(void *);
+
+typedef int(*SearchAccessor)(void *, void *);
 
 List list_create(void);
 
@@ -39,7 +41,9 @@ List list_map(List l, ListFunctor f, void* environment);
 
 List list_sort(List l, OrderFunctor f);
 
-int list_get_index(const List l, int * v, IndexAccess f);
+int list_get_index(const List l, int * v, IndexAccessor f);
+
+List list_search(const List l, void * value, SearchAccessor f);
 
 #endif
 

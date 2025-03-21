@@ -20,7 +20,12 @@ struct s_Graph {
 // typedef void (*GraphEdgeMapOperator)(const void* elem, void* user_param);
 int _int_functor_order(void * x, void * y);
 int _edge_functor_order(void * x, void * y);
-int _index_access_vertex(void * e);
+int _index_accessor_vertex(void * e);
+int _search_accessor_head(void * e, void * args);
+int _search_accessor_tail(void * e, void * args);
+
+void *print_edge(void *, void *);
+
 /*----- Header Functions -----*/
 
 Graph graph_create() {
@@ -71,7 +76,7 @@ void graph_delete(Graph g){
 
 Graph graph_delete_vertex(Graph g, const int n) {
 	int n_c = (int)n;
-	int i = list_get_index(g->vertices,&n_c,_index_access_vertex);
+	int i = list_get_index(g->vertices,&n_c,_index_accessor_vertex);
 	if(i == -1) {
 		fprintf(stderr, "Error : Trying to delete a non existent vertex in graph_delete_vertex\n");
 		return g;
@@ -104,14 +109,17 @@ float graph_get_edge_weight(const Edge e) {
 	return e->weight;
 }
 
-// List graph_get_neighbors(Graph g, const int n){
-// 	return NULL;
-// }
+List graph_get_neighbors(Graph g, const int n) {
+	List neighbors = list_search(g->edges,(void *)&n,_search_accessor_head);
+	list_map(g->edges,print_edge,NULL);
+	printf("LENGTH : %d\n",list_size(neighbors));
+	return neighbors;
+}
 
 int graph_vertex_exists(Graph g, const int n) {
 	int * n_copy = malloc(sizeof(int));
 	*n_copy = (int)n;
-	int result = list_get_index(g->vertices,n_copy,_index_access_vertex) != -1;
+	int result = list_get_index(g->vertices,n_copy,_index_accessor_vertex) != -1;
 	free(n_copy);
 	return result;
 }
@@ -154,7 +162,26 @@ int _edge_functor_order(void * x, void * y) {
 	return x_c->n1 == y_c->n1 ? x_c->n2 < y_c->n2 : x_c->n1 < y_c->n1;
 }
 
-int _index_access_vertex(void * v) {
+int _index_accessor_vertex(void * v) {
 	int * vertex = (int *)v;
 	return *vertex;
+}
+
+int _search_accessor_head(void * v, void * argv) {
+	Edge e = (Edge)v;
+	int * value = (int *)argv;
+	return graph_get_edges_start(e) == *value;
+}
+
+int _search_accessor_tail(void * v, void * argv) {
+	Edge e = (Edge)v;
+	int * value = (int *)argv;
+	return graph_get_edges_end(e) == *value;
+}
+
+// DEBUG
+void * print_edge(void * v, void * argv) {
+	Edge e = (Edge)v;
+	printf("%d <-----> %d\n",graph_get_edges_start(e),graph_get_edges_end(e));
+	return NULL;
 }

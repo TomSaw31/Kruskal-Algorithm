@@ -4,6 +4,6 @@
 
 int convert_graph_to_json(Graph g, char * file_location);
 
-int create_graph_from_json(Graph g, char * file_location);
+// int create_graph_from_json(Graph g, char * file_location);
 
 #endif
