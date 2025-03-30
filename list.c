@@ -135,6 +135,12 @@ List list_map(List l, ListFunctor f, void * environment) {
     return l;
 }
 
+List list_for_each(List l, ListFunctor f, void * environment) {
+    for (LinkedNode * n = l->sll->next; n != l->sll; n = n->next)
+        f(n->value, environment);
+    return l;
+}
+
 void * list_at(const List l, int p) {
     assert(0 <= p && p < l->size);
 	LinkedNode * n = l->sll->next;

@@ -1,6 +1,6 @@
-digraph G {
-    A -> B;
-    B -> C;
-    C -> D;
-    D -> A;
+graph G {
+	1 -- 2 [label="0.5"];
+	1 -- 3 [label="0.1"];
+	2 -- 3 [label="0.64"];
+	3 -- 2 [label="0.1"];
 }

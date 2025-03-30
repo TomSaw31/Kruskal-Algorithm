@@ -24,9 +24,9 @@ List graph_get_vertices(Graph g);
 
 List graph_get_edges(Graph g);
 
-int graph_get_edges_start(const Edge e);
+int graph_get_edge_start(const Edge e);
 
-int graph_get_edges_end(const Edge e);
+int graph_get_edge_end(const Edge e);
 
 float graph_get_edge_weight(const Edge e);
 

@@ -32,11 +32,11 @@ int convert_graph_to_json(Graph g, char * file_location) {
     Edge e_copy;
     for(int i = 0; i < edges_count - 1; i++) {
         e_copy = (Edge)list_at(edges,i);
-        fprintf(f, "\t\t{ \"from\": %d, \"to\": %d, \"weight\": %f },\n",graph_get_edges_start(e_copy),graph_get_edges_end(e_copy), graph_get_edge_weight(e_copy));
+        fprintf(f, "\t\t{ \"from\": %d, \"to\": %d, \"weight\": %f },\n",graph_get_edge_start(e_copy),graph_get_edge_end(e_copy), graph_get_edge_weight(e_copy));
     }
     if(edges_count - 1 >= 0) {
         e_copy = (Edge)list_at(edges,edges_count - 1);
-        fprintf(f, "\t\t{ \"from\": %d, \"to\": %d, \"weight\": %f }\n",graph_get_edges_start(e_copy),graph_get_edges_end(e_copy), graph_get_edge_weight(e_copy));
+        fprintf(f, "\t\t{ \"from\": %d, \"to\": %d, \"weight\": %f }\n",graph_get_edge_start(e_copy),graph_get_edge_end(e_copy), graph_get_edge_weight(e_copy));
     }
     fprintf(f,"\t]\n");
     fprintf(f,"}\n");

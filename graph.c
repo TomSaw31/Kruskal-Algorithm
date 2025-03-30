@@ -97,11 +97,11 @@ List graph_get_edges(Graph g) {
 	return g->edges;
 }
 
-int graph_get_edges_start(const Edge e) {
+int graph_get_edge_start(const Edge e) {
 	return e->n1;
 }
 
-int graph_get_edges_end(const Edge e) {
+int graph_get_edge_end(const Edge e) {
 	return e->n2;
 }
 
@@ -109,6 +109,7 @@ float graph_get_edge_weight(const Edge e) {
 	return e->weight;
 }
 
+// TODO
 List graph_get_neighbors(Graph g, const int n) {
 	List neighbors = list_search(g->edges,(void *)&n,_search_accessor_head);
 	list_map(g->edges,print_edge,NULL);
@@ -170,18 +171,18 @@ int _index_accessor_vertex(void * v) {
 int _search_accessor_head(void * v, void * argv) {
 	Edge e = (Edge)v;
 	int * value = (int *)argv;
-	return graph_get_edges_start(e) == *value;
+	return graph_get_edge_start(e) == *value;
 }
 
 int _search_accessor_tail(void * v, void * argv) {
 	Edge e = (Edge)v;
 	int * value = (int *)argv;
-	return graph_get_edges_end(e) == *value;
+	return graph_get_edge_end(e) == *value;
 }
 
 // DEBUG
 void * print_edge(void * v, void * argv) {
 	Edge e = (Edge)v;
-	printf("%d <-----> %d\n",graph_get_edges_start(e),graph_get_edges_end(e));
+	printf("%d <-----> %d\n",graph_get_edge_start(e),graph_get_edge_end(e));
 	return NULL;
 }

@@ -6,6 +6,8 @@
         "assert.h": "c",
         "type_traits": "c",
         "xtr1common": "c",
-        "xutility": "c"
+        "xutility": "c",
+        "stdlib.h": "c",
+        "graphviz_generator.h": "c"
     }
 }
