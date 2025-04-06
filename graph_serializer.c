@@ -44,3 +44,23 @@ int convert_graph_to_json(Graph g, char * file_location) {
     fclose(f);
     return 0;
 }
+
+
+int create_graph_from_json(Graph g, char * file_location) {
+    FILE * f = fopen(file_location, "r+");
+    if(f == NULL) {
+        fprintf(stderr,"Error while opening the file : %s in create_graph_from_json\n",file_location);
+        return -1;
+    }
+    List vertices = list_create();
+    int vertices_count = 0;
+    List edges = list_create();
+    int edges_count = 0;
+    // TODO
+
+
+
+
+
+    return 0;
+}

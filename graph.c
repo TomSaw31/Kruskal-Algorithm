@@ -18,13 +18,14 @@ struct s_Graph {
 };
 
 // typedef void (*GraphEdgeMapOperator)(const void* elem, void* user_param);
+
 int _int_functor_order(void * x, void * y);
 int _edge_functor_order(void * x, void * y);
 int _index_accessor_vertex(void * e);
 int _search_accessor_head(void * e, void * args);
 int _search_accessor_tail(void * e, void * args);
 
-void *print_edge(void *, void *);
+void * print_edge(void *, void *);
 
 /*----- Header Functions -----*/
 
@@ -133,11 +134,11 @@ int graph_empty(const Graph g){
 	return !list_size(g->vertices);
 }
 
-unsigned int graph_size(const Graph g){
+unsigned int graph_size(const Graph g) {
 	return list_size(g->vertices);
 }
 
-unsigned int graph_edges_amount(const Graph g){
+unsigned int graph_edges_amount(const Graph g) {
 	return list_size(g->edges);
 }
 

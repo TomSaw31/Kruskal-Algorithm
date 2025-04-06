@@ -12,7 +12,7 @@ int convert_graph_to_dot(Graph g, char * file_location) {
         fprintf(stderr,"Error while opening the file : %s in convert_graph_to_json\n",file_location);
         return -1;
     }
-    fprintf(f,"graph G {\n");
+    fprintf(f,"graph {\n");
     List l = graph_get_edges(g);
     list_for_each(l,_write_egdes,f);
     fprintf(f,"}\n");
